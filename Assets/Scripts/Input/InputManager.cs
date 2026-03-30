@@ -9,6 +9,10 @@ public class InputManager : MonoBehaviour
     public bool JumpPressed { get; private set; }
     public bool CrouchPressed { get; private set; }
     public bool SprintPressed { get; private set; }
+    public bool InteractPressed { get; private set; }
+
+    public float MouseInputX { get; private set; }
+    public float MouseInputY { get; private set; }
 
     void Update()
     {
@@ -17,5 +21,9 @@ public class InputManager : MonoBehaviour
         JumpPressed = Input.GetKeyDown(KeyCode.Space);
         CrouchPressed = Input.GetKey(KeyCode.LeftControl);
         SprintPressed = Input.GetKey(KeyCode.LeftShift);
+        InteractPressed = Input.GetKeyDown(KeyCode.E);
+
+        MouseInputX = Input.GetAxisRaw("Mouse X");
+        MouseInputY = Input.GetAxisRaw("Mouse Y");
     }
 }

@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class PlayerAerialState : PlayerState
 {
-    private float _aerialMoveMult = 1f;
+    private string _accMultName = "Aerial";
     private float _aerialAccMult = 0.1f;
 
     public PlayerAerialState(Player player) : base(player)
     {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        _player.MovementManager.ApplyAccMult(_accMultName, _aerialAccMult);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        _player.MovementManager.RemoveAccMult(_accMultName);
     }
 
     public override void FrameUpdate()
@@ -18,17 +30,16 @@ public class PlayerAerialState : PlayerState
 
     public override void PhysicsUpdate()
     {
-        _player.Move(_aerialMoveMult, _aerialAccMult);
         base.PhysicsUpdate();
     }
 
     public override void StateChanges()
     {
-        if (_player.IsGrounded())
+        if (_player.MovementManager.IsGrounded)
         {
-            if (_player.CrouchPressed())
+            if (_player.InputManager.CrouchPressed)
             {
-                if (_player.MovePressed())
+                if (_player.InputManager.MovePressed)
                 {
                     _player.ToCrouchWalkState();
                 }
@@ -39,9 +50,9 @@ public class PlayerAerialState : PlayerState
                 return;
             }
 
-            if (_player.MovePressed())
+            if (_player.InputManager.MovePressed)
             {
-                if (_player.SprintPressed())
+                if (_player.InputManager.SprintPressed)
                 {
                     _player.ToSprintState();
                 }

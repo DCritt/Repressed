@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerState
 {
-    private float _idleMoveMult = 1f;
-    private float _idleAccMult = 1f;
-
     public PlayerIdleState(Player player) : base(player)
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void FrameUpdate()
     {
-        if (_player.JumpPressed())
+        if (_player.InputManager.JumpPressed)
         {
-            _player.Jump();
+            _player.MovementManager.Jump();
         }
         base.FrameUpdate();
     }
@@ -23,20 +30,19 @@ public class PlayerIdleState : PlayerState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        _player.Move(_idleMoveMult, _idleAccMult);
     }
 
     public override void StateChanges()
     {
-        if (!_player.IsGrounded())
+        if (!_player.MovementManager.IsGrounded)
         {
             _player.ToAerialState();
             return;
         }
 
-        if (_player.CrouchPressed())
+        if (_player.InputManager.CrouchPressed)
         {
-            if (_player.MovePressed())
+            if (_player.InputManager.MovePressed)
             {
                 _player.ToCrouchWalkState();
             }
@@ -47,9 +53,9 @@ public class PlayerIdleState : PlayerState
             return;
         }
 
-        if (_player.MovePressed())
+        if (_player.InputManager.MovePressed)
         {
-            if (_player.SprintPressed())
+            if (_player.InputManager.SprintPressed)
             {
                 _player.ToSprintState();
             }

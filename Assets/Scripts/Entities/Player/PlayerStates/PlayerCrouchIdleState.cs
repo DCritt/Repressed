@@ -4,43 +4,49 @@ using UnityEngine;
 
 public class PlayerCrouchIdleState : PlayerState
 {
-    private float _crouchIdleMoveMult = 0f;
-    private float _crouchIdleAccMult = 1f;
-
     public PlayerCrouchIdleState(Player player) : base(player)
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void FrameUpdate()
     {
-        if (_player.JumpPressed())
+        if (_player.InputManager.JumpPressed)
         {
-            _player.Jump();
+            _player.MovementManager.Jump();
         }
         base.FrameUpdate();
     }
 
     public override void PhysicsUpdate()
     {
-        _player.Move(_crouchIdleMoveMult, _crouchIdleAccMult);
         base.PhysicsUpdate();
     }
 
     public override void StateChanges()
     {
-        if (!_player.IsGrounded())
+        if (!_player.MovementManager.IsGrounded)
         {
             _player.ToAerialState();
             return;
         }
 
-        if (!_player.CrouchPressed())
+        if (!_player.InputManager.CrouchPressed)
         {
-            if (!_player.MovePressed())
+            if (!_player.InputManager.MovePressed)
             {
                 _player.ToIdleState();
             }
-            else if (_player.SprintPressed())
+            else if (_player.InputManager.SprintPressed)
             {
                 _player.ToSprintState();
             }
@@ -51,7 +57,7 @@ public class PlayerCrouchIdleState : PlayerState
             return;
         }
 
-        if (_player.MovePressed())
+        if (_player.InputManager.MovePressed)
         {
             _player.ToCrouchWalkState();
             return;

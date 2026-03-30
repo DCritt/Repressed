@@ -4,39 +4,45 @@ using UnityEngine;
 
 public class PlayerWalkState : PlayerState
 {
-    private float _walkMoveMult = 1f;
-    private float _walkAccMult = 1f;
-
     public PlayerWalkState(Player player) : base(player)
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void FrameUpdate()
     {
-        if (_player.JumpPressed())
+        if (_player.InputManager.JumpPressed)
         {
-            _player.Jump();
+            _player.MovementManager.Jump();
         }
         base.FrameUpdate();
     }
 
     public override void PhysicsUpdate()
     {
-        _player.Move(_walkMoveMult, _walkAccMult);
         base.PhysicsUpdate();
     }
 
     public override void StateChanges()
     {
-        if (!_player.IsGrounded())
+        if (!_player.MovementManager.IsGrounded)
         {
             _player.ToAerialState();
             return;
         }
 
-        if (!_player.MovePressed())
+        if (!_player.InputManager.MovePressed)
         {
-            if (_player.CrouchPressed())
+            if (_player.InputManager.CrouchPressed)
             {
                 _player.ToCrouchIdleState();
             }
@@ -47,13 +53,13 @@ public class PlayerWalkState : PlayerState
             return;
         }
 
-        if (_player.CrouchPressed())
+        if (_player.InputManager.CrouchPressed)
         {
             _player.ToCrouchWalkState();
             return;
         }
 
-        if (_player.SprintPressed())
+        if (_player.InputManager.SprintPressed)
         {
             _player.ToSprintState();
             return;

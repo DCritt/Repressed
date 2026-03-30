@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.UI;
 using UnityEngine;
 
 public class Player : Entity
 {
-    private InputManager _inputManager;
-    private MovementManager _movementManager;
+    public InputManager InputManager { get; private set; }
+    public MovementManager MovementManager { get; private set; }
+    public PlayerInteractManager PlayerInteractManager { get; private set; }
+    public InteractManager InteractManager { get; private set; }
+    [field: SerializeField] public CameraManager CameraManager { get; private set; }
+    [field: SerializeField] public Follow Facade { get; private set; }
 
     private PlayerIdleState _idleState;
     private PlayerCrouchIdleState _crouchIdleState;
@@ -19,8 +22,10 @@ public class Player : Entity
 
     void Awake()
     {
-        _inputManager = GetComponent<InputManager>();
-        _movementManager = GetComponent<MovementManager>();
+        InputManager = GetComponent<InputManager>();
+        MovementManager = GetComponent<MovementManager>();
+        PlayerInteractManager = GetComponent<PlayerInteractManager>();
+        InteractManager = GetComponent<InteractManager>();
 
         _idleState = new PlayerIdleState(this); 
         _crouchIdleState = new PlayerCrouchIdleState(this);
@@ -31,31 +36,24 @@ public class Player : Entity
         _stateMachine = new StateMachine(_idleState);
     }
 
+    private void Start()
+    {
+        CameraManager.SetTarget(transform);
+        Facade.SetTarget(transform);
+    }
+
     void Update()
     {
         _stateMachine.FrameUpdate();
+        CameraManager.UpdateInput(InputManager.MouseInputX, -InputManager.MouseInputY);
+        MovementManager.SetMoveInput(InputManager.MovementInput);
+        MovementManager.SetRotation(CameraManager.Yaw);
     }
 
     void FixedUpdate()
     {
         _stateMachine.PhysicsUpdate();
     }
-
-    public Vector2 MovementInput() => _inputManager.MovementInput;
-    public bool MovePressed() => _inputManager.MovePressed;
-    public bool JumpPressed() => _inputManager.JumpPressed;
-    public bool CrouchPressed() => _inputManager.CrouchPressed;
-    public bool SprintPressed() => _inputManager.SprintPressed;
-
-    public void Move(float stateMove, float accMult)
-    {
-        _movementManager.Move(_inputManager.MovementInput, stateMove, accMult);
-    }
-    public void Jump()
-    {
-        _movementManager.Jump();
-    }
-    public bool IsGrounded() => _movementManager.IsGrounded();
 
     public void ToIdleState()
     {
