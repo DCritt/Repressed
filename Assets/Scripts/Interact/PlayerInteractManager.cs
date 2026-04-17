@@ -43,7 +43,7 @@ public class PlayerInteractManager : MonoBehaviour
     private void CheckForInteract()
     {
         if (!_interactEnabled) { return; }
-        if (_player.InputManager.InteractPressed)
+        if (PlayerInputManager.Instance.InteractPressed)
         {
             _player.InteractManager.TryInteractable();
         }

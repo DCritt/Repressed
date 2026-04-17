@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    public InputManager InputManager { get; private set; }
     public MovementManager MovementManager { get; private set; }
     public PlayerInteractManager PlayerInteractManager { get; private set; }
     public InteractManager InteractManager { get; private set; }
@@ -23,7 +22,6 @@ public class Player : Entity
 
     void Awake()
     {
-        InputManager = GetComponent<InputManager>();
         MovementManager = GetComponent<MovementManager>();
         PlayerInteractManager = GetComponent<PlayerInteractManager>();
         InteractManager = GetComponent<InteractManager>();
@@ -47,8 +45,8 @@ public class Player : Entity
     void Update()
     {
         _stateMachine.FrameUpdate();
-        CameraManager.UpdateInput(InputManager.MouseInputX, -InputManager.MouseInputY);
-        MovementManager.SetMoveInput(InputManager.MovementInput);
+        CameraManager.UpdateInput(PlayerInputManager.Instance.MouseInputX, -PlayerInputManager.Instance.MouseInputY);
+        MovementManager.SetMoveInput(PlayerInputManager.Instance.MovementInput);
         MovementManager.SetRotation(CameraManager.Yaw);
     }
 

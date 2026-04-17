@@ -25,7 +25,7 @@ public class PlayerCrouchWalkState : PlayerState
 
     public override void FrameUpdate()
     {
-        if (_player.InputManager.JumpPressed)
+        if (PlayerInputManager.Instance.JumpPressed)
         {
             _player.MovementManager.Jump();
         }
@@ -45,13 +45,13 @@ public class PlayerCrouchWalkState : PlayerState
             return;
         }
 
-        if (!_player.InputManager.CrouchPressed)
+        if (!PlayerInputManager.Instance.CrouchPressed)
         {
-            if (!_player.InputManager.MovePressed)
+            if (!PlayerInputManager.Instance.MovePressed)
             {
                 _player.ToIdleState();
             }
-            else if (_player.InputManager.SprintPressed) 
+            else if (PlayerInputManager.Instance.SprintPressed) 
             {
                 _player.ToSprintState();
             }
@@ -62,7 +62,7 @@ public class PlayerCrouchWalkState : PlayerState
             return;
         }
 
-        if (!_player.InputManager.MovePressed)
+        if (!PlayerInputManager.Instance.MovePressed)
         {
             _player.ToCrouchIdleState();
             return;

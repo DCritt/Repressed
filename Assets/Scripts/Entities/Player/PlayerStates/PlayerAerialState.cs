@@ -37,9 +37,9 @@ public class PlayerAerialState : PlayerState
     {
         if (_player.MovementManager.IsGrounded)
         {
-            if (_player.InputManager.CrouchPressed)
+            if (PlayerInputManager.Instance.CrouchPressed)
             {
-                if (_player.InputManager.MovePressed)
+                if (PlayerInputManager.Instance.MovePressed)
                 {
                     _player.ToCrouchWalkState();
                 }
@@ -50,9 +50,9 @@ public class PlayerAerialState : PlayerState
                 return;
             }
 
-            if (_player.InputManager.MovePressed)
+            if (PlayerInputManager.Instance.MovePressed)
             {
-                if (_player.InputManager.SprintPressed)
+                if (PlayerInputManager.Instance.SprintPressed)
                 {
                     _player.ToSprintState();
                 }

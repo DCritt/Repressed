@@ -20,8 +20,6 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         transform.SetParent(null);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void Update()
