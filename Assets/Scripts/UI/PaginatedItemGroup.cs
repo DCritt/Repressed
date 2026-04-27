@@ -13,8 +13,8 @@ public class PaginatedItemGroup : MonoBehaviour
     private List<GameObject> _items = new List<GameObject>();
 
     public int CurrPage { get; private set; } = 1;
-    private int _maxPage = 1;
-    private int _itemsPerPage = 9;
+    public int MaxPage { get; private set; } = 1;
+    [SerializeField] private int _itemsPerPage;
 
     public void Awake()
     {
@@ -36,15 +36,14 @@ public class PaginatedItemGroup : MonoBehaviour
         {
             item.transform.SetParent(_itemHolder.transform);
         }
-        _maxPage = (int) Mathf.Ceil((float)_items.Count / _itemsPerPage);
+        MaxPage = (int) Mathf.Ceil((float)_items.Count / _itemsPerPage);
         SetPage(1);
     }
 
     public void AddItem(GameObject item)
     {
         _items.Insert(0, item);
-        item.transform.SetParent(_itemHolder.transform);
-        _maxPage = (int) Mathf.Ceil((float)_items.Count / _itemsPerPage);
+        MaxPage = (int) Mathf.Ceil((float)_items.Count / _itemsPerPage);
         SetPage(CurrPage);
     }
 
@@ -52,7 +51,7 @@ public class PaginatedItemGroup : MonoBehaviour
     {
         _items.Remove(item);
         Destroy(item);
-        _maxPage = (int) Mathf.Ceil((float)_items.Count / _itemsPerPage);
+        MaxPage = (int) Mathf.Ceil((float)_items.Count / _itemsPerPage);
         SetPage(CurrPage);
     }
 
@@ -68,7 +67,7 @@ public class PaginatedItemGroup : MonoBehaviour
 
     public void SetPage(int page)
     {
-        CurrPage = Mathf.Clamp(page, 1, _maxPage);
+        CurrPage = Mathf.Clamp(page, 1, MaxPage);
 
         int startIndex = (CurrPage - 1) * _itemsPerPage;
         int endIndex = (CurrPage * _itemsPerPage) - 1;
@@ -83,7 +82,6 @@ public class PaginatedItemGroup : MonoBehaviour
             if (show)
             {
                 _items[i].transform.SetParent(_slots[photoIndex].transform, false);
-                _items[i].transform.position = _slots[photoIndex].transform.position;
             }
         }
     }

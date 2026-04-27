@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InteractManager: MonoBehaviour
 {
+    public InteractState InteractState { get; private set; } = InteractState.None;
     private IInteractable _currentInteractable = null;
     private Entity _entity;
 
@@ -16,9 +17,10 @@ public class InteractManager: MonoBehaviour
     {
         if (_currentInteractable == interactable) return;
 
-        if (interactable != null) { interactable.InteractExit(_entity); }
+        InteractState = InteractState.None;
+        if (_currentInteractable != null) { _currentInteractable.InteractExit(_entity); }
         _currentInteractable = interactable;
-        _currentInteractable.InteractEnter(_entity);
+        if (interactable != null) { InteractState = _currentInteractable.InteractEnter(_entity); }
     }
 
     public void TryInteractable()

@@ -9,6 +9,8 @@ public class Player : Entity
     public PlayerInteractManager PlayerInteractManager { get; private set; }
     public InteractManager InteractManager { get; private set; }
     public CamcorderManager CamcorderManager { get; private set; }
+    public PlayerUIManager PlayerUIManager { get; private set; }
+    public InventoryManager InventoryManager { get; private set; }
     [field: SerializeField] public CameraManager CameraManager { get; private set; }
     [field: SerializeField] public Follow Facade { get; private set; }
 
@@ -25,6 +27,8 @@ public class Player : Entity
         MovementManager = GetComponent<MovementManager>();
         PlayerInteractManager = GetComponent<PlayerInteractManager>();
         InteractManager = GetComponent<InteractManager>();
+        PlayerUIManager = GetComponent<PlayerUIManager>();
+        InventoryManager = GetComponent<InventoryManager>();
         CamcorderManager = GetComponent<CamcorderManager>();
 
         _idleState = new PlayerIdleState(this); 

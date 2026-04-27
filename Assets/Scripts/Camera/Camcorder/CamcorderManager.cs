@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class CamcorderManager : MonoBehaviour
 {
+    private Player _player;
+
     [SerializeField] private Camera _photoCamera;
     [SerializeField] private RenderTexture _photoRenderTexture;
 
@@ -18,6 +20,7 @@ public class CamcorderManager : MonoBehaviour
 
     private void Awake()
     {
+        _player = GetComponent<Player>();
         _photoCamera.targetTexture = _photoRenderTexture;
     }
 
@@ -48,6 +51,7 @@ public class CamcorderManager : MonoBehaviour
         {
             _camcorderEnabled = !_camcorderEnabled;
             SetCamcorderEnabled(_camcorderEnabled);
+            _player.PlayerUIManager.SetCamcorderUIEnabled(_camcorderEnabled);
         }
     }
 
@@ -56,27 +60,10 @@ public class CamcorderManager : MonoBehaviour
         float timeDelta = Time.time - _lastPicture;
         if (_camcorderEnabled && PlayerInputManager.Instance.LeftMousePressed && timeDelta >= _pictureCooldown)
         {
-            NewCapturePicture();
+            CapturePicture();
             PostProcessingManager.Instance.TriggerCamcorderFlash();
             _lastPicture = Time.time;
         }
-    }
-
-    private void CapturePictureGPU()
-    {
-        AsyncGPUReadback.Request(_photoRenderTexture, 0, TextureFormat.RGBA32, OnCompleteCapture);
-    }
-
-    private void OnCompleteCapture(AsyncGPUReadbackRequest request)
-    {
-        var data = request.GetData<Color32>();
-
-        Texture2D picture = new Texture2D(_photoRenderTexture.width, _photoRenderTexture.height, TextureFormat.RGBA32, false, false);
-
-        picture.SetPixelData(data, 0);
-        picture.Apply(false, false);
-
-        SaveManager.Instance.SavePicture(picture);
     }
 
     private void CapturePicture()
@@ -91,30 +78,6 @@ public class CamcorderManager : MonoBehaviour
         RenderTexture.active = prev;
 
         SaveManager.Instance.SavePicture(picture);
-    }
-
-    private void NewCapturePicture()
-    {
-        _photoCamera.targetTexture = _photoRenderTexture;
-
-        _photoCamera.Render(); // IMPORTANT
-
-        RenderTexture prev = RenderTexture.active;
-        RenderTexture.active = _photoRenderTexture;
-
-        Texture2D tex = new Texture2D(
-            _photoRenderTexture.width,
-            _photoRenderTexture.height,
-            TextureFormat.RGBA32,
-            false
-        );
-
-        tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
-        tex.Apply();
-
-        RenderTexture.active = prev;
-
-        SaveManager.Instance.SavePicture(tex);
     }
 
     private void CheckForCamcorderZoom()

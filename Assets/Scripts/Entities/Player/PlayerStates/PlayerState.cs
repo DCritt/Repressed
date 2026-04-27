@@ -19,5 +19,6 @@ public abstract class PlayerState : IState
     }
     public virtual void PhysicsUpdate() { }
 
-    public abstract void StateChanges();
+    protected abstract void StateChanges();
+    protected abstract void HandleInputs();
 }

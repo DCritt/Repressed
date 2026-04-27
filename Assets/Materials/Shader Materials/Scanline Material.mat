@@ -50,6 +50,6 @@ Material:
     - _Scanline_Glitch_Speed: 0.00001
     - _Scanline_Noise_Scale: 750
     - _Scanline_Noise_Speed: 0.0001
-    - _Shader_Weight: 0.9999973
+    - _Shader_Weight: 0.0015807985
     m_Colors: []
   m_BuildTextureStacks: []

@@ -10,6 +10,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField][Range(0, 90)] private float _pitchLimit;
     [SerializeField] private float _rotationSpeed;
     private Transform _target;
+    [SerializeField] private Vector3 _targetOffset;
     private int _targetLayerMask;
     [SerializeField] private float _followSpeed;
     private float _maxRaycastDistance = 200f;
@@ -55,7 +56,7 @@ public class CameraManager : MonoBehaviour
     public RaycastHit SendRaycast()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position, transform.forward, out hit, _maxRaycastDistance, _targetLayerMask);
+        Physics.Raycast(transform.position, transform.forward, out hit, _maxRaycastDistance, _targetLayerMask, QueryTriggerInteraction.Ignore);
         return hit;
     }
 
@@ -71,6 +72,8 @@ public class CameraManager : MonoBehaviour
     {
         Vector3 currentPos = transform.position;
         Vector3 targetPos = _target.position;
+        targetPos += _target.TransformDirection(_targetOffset);
+
         float t = _followSpeed * Time.deltaTime;
         transform.position = Vector3.Lerp(currentPos, targetPos, t);
     }

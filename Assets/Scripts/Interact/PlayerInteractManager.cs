@@ -33,11 +33,14 @@ public class PlayerInteractManager : MonoBehaviour
     private void CheckForInteractable()
     {
         RaycastHit hit = _player.CameraManager.SendRaycast();
-        IInteractable interactable;
-        if (hit.collider != null && hit.transform.TryGetComponent<IInteractable>(out interactable))
+        IInteractable interactable = null;
+        if (hit.collider != null)
         {
-            _player.InteractManager.SetInteractable(interactable);
+            interactable = hit.distance <= _interactDistance ? hit.collider.GetComponentInParent<IInteractable>() : null;
         }
+        _player.InteractManager.SetInteractable(interactable);
+
+        _player.PlayerUIManager.SetInteractCrosshair(_player.InteractManager.InteractState);
     }
 
     private void CheckForInteract()

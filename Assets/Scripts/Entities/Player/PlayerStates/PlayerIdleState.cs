@@ -20,10 +20,7 @@ public class PlayerIdleState : PlayerState
 
     public override void FrameUpdate()
     {
-        if (PlayerInputManager.Instance.JumpPressed)
-        {
-            _player.MovementManager.Jump();
-        }
+        HandleInputs();
         base.FrameUpdate();
     }
 
@@ -32,7 +29,7 @@ public class PlayerIdleState : PlayerState
         base.PhysicsUpdate();
     }
 
-    public override void StateChanges()
+    protected override void StateChanges()
     {
         if (!_player.MovementManager.IsGrounded)
         {
@@ -64,6 +61,14 @@ public class PlayerIdleState : PlayerState
                 _player.ToWalkState();
             }
             return;
+        }
+    }
+
+    protected override void HandleInputs()
+    {
+        if (PlayerInputManager.Instance.JumpPressed)
+        {
+            _player.MovementManager.Jump();
         }
     }
 }

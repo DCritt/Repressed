@@ -33,7 +33,7 @@ public class PlayerAerialState : PlayerState
         base.PhysicsUpdate();
     }
 
-    public override void StateChanges()
+    protected override void StateChanges()
     {
         if (_player.MovementManager.IsGrounded)
         {
@@ -67,5 +67,10 @@ public class PlayerAerialState : PlayerState
             }
             return;
         }
+    }
+
+    protected override void HandleInputs()
+    {
+        
     }
 }

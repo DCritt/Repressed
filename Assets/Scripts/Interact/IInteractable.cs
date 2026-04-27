@@ -5,7 +5,10 @@ using UnityEngine.UIElements.Experimental;
 
 public interface IInteractable
 {
-    public void InteractEnter(Entity entity);
+    public InteractState InteractEnter(Entity entity)
+    {
+        return InteractState.Interactable;
+    }
     public void Interact(Entity entity);
     public void InteractExit(Entity entity);
 }
