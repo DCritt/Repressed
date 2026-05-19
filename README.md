@@ -1,19 +1,104 @@
 # Repressed
 
-Milestone 3 Worked On Items
-1. Camcorder Shader
-    a. Created a shader with noise and scanlines for the camcorder
-    b. Added the ability to zoom with the camera
-2. Pictures
-    a. Added the flash effect when taking pictures
-    b. Added photo saving/caching
-    c. Added a photo viewing screen
-    d. Added a second photo camera that renders the "secret" layer
-3. 3D Models
-    a. More work was done on 3D models.
-    b. Textures also almost done.
-4. Map Design
-    a. Invisible bariers added.
-    b. Rest of map still in development.
-5. Menu Design
-    a. Added menu manager with a pause menu, main menu, and settings menu.
+> Repressed is a first person liminal horror game where the main character has been transported to another dimension and must find a way to escape.
+
+---
+
+## Gameplay Overview
+
+- Locate a means for escaping each level.
+- Avoid the entity
+- Complete level puzzles/objectives
+- Photograph anomalies
+
+---
+
+## Features
+
+- First-person player controller
+- Save and load function for pictures
+- Camera that reveals secrets through culling mask
+- Post processing effects that replicate camera look
+
+---
+
+## Screenshots
+
+### Main Environment
+
+![Screenshot](screenshots/Screenshot%202026-04-27%20135318.png)
+
+![Screenshot](screenshots/Screenshot%202026-05-19%20140209.png)
+
+---
+
+## Technologies Used
+- Engine: Unity Engine
+- Languages: C#
+- Version Control: Git / GitHub
+- 3D Modeling: Blender
+- Audio: Free audio assets
+
+---
+
+## Controls
+
+| Action | Key |
+|---|---|
+| Move | WASD |
+| Sprint | Shift |
+| Look | Mouse |
+| Crouch | Left Control |
+| Camera | C |
+| Zoom Camera | Scroll Wheel |
+| Take Picture | Left Mouse Button |
+| Interact | E |
+| Pause | ESC |
+| Photo Menu | Tab |
+
+---
+
+## Development Challenges
+
+- Performance issues related object count
+- Time Constraint
+- Art creation
+- Hidden lighting
+
+---
+
+## What I Learned
+
+- Unity Game Engine
+- Post Processing Effects
+- Seperation of Concerns
+- Unity Graphics Processing
+
+---
+
+## Future Improvements
+
+- Additional levels
+- Entity Implementation
+- 3D Audio
+- Advanced save system
+- Additional puzzle mechanics
+
+---
+
+## Known Issues
+
+- Performance related to object count
+- No entity
+- Short level
+- Poor Door/Lock Script
+
+---
+
+## Credits
+
+### Developer
+- David Crittendon
+
+### Assets
+- Art — David Crittendon

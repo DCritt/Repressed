@@ -44,6 +44,7 @@ public class LetterLock : MonoBehaviour, ILock
         if (code.ToLower().Equals(_code.ToLower()))
         {
             _useDoor?.Invoke(_entity);
+            
             return true;
         }
         return false;
