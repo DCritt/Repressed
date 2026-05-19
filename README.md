@@ -26,9 +26,9 @@
 
 ### Main Environment
 
-![Screenshot](assets/screenshots/Screenshot%202026-05-19%20131158.png)
+![Screenshot](screenshots/Screenshot%202026-04-27%20135318.png)
 
-![Screenshot](assets/screenshots/Screenshot%202026-05-19%20131138.png)
+![Screenshot](screenshots/Screenshot%202026-05-19%20140209.png)
 
 ---
 
